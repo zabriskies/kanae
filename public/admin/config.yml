@@ -1,0 +1,24 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# 画像などのアップロード先
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "blog"
+    label: "Journal（ブログ）"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - { label: "概要", name: "description", widget: "text", required: false }
+      - { label: "公開日", name: "pubDate", widget: "datetime" }
+      - { label: "更新日", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "アイキャッチ画像", name: "heroImage", widget: "image", required: false }
+      - { label: "下書きにする", name: "draft", widget: "boolean", default: false }
+      - { label: "本文", name: "body", widget: "markdown" }

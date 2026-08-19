@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PostCard from '../components/PostCard.astro';
+import InstagramSection from '../components/InstagramSection.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 4);
+---
+<Layout title="Studio Note">
+  <section class="hero">
+    <p class="hero__eyebrow">Journal / Shop / Snapshots</p>
+    <h1 class="hero__title">つくること、書くこと、<br />届けること。</h1>
+    <p class="hero__lede">
+      制作の記録と、これから始める小さな販売と、日々のスナップをここに置いています。
+    </p>
+  </section>
+
+  <section class="latest">
+    <div class="latest__head">
+      <h2>Latest Journal</h2>
+      <a class="latest__all" href="/blog">すべて見る →</a>
+    </div>
+    {posts.map((post, i) => (
+      <PostCard
+        index={i + 1}
+        href={`/blog/${post.id}/`}
+        title={post.data.title}
+        description={post.data.description}
+        pubDate={post.data.pubDate}
+      />
+    ))}
+  </section>
+
+  <InstagramSection />
+</Layout>
+
+<style>
+  .hero { padding: 56px 0 40px; }
+  .hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  .hero__title {
+    font-size: clamp(32px, 6vw, 52px);
+    line-height: 1.25;
+    max-width: 14ch;
+  }
+  .hero__lede {
+    max-width: 46ch;
+    color: var(--ink-soft);
+    font-size: 16px;
+    margin-top: 16px;
+  }
+  .latest { margin-top: 48px; }
+  .latest__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 10px;
+  }
+  .latest__all {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--accent-brick);
+  }
+</style>

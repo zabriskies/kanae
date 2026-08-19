@@ -1,0 +1,69 @@
+---
+/**
+ * 最新Instagram投稿セクション（プレースホルダー）
+ *
+ * 差し替え方法は2通りあります。README.md の「Instagram連携」を参照してください。
+ *
+ * ① 簡単な方法：SnapWidget / Elfsight などの埋め込みウィジェットに置き換える
+ *    → このコンポーネントの中身を、発行された <iframe> や <script> タグに差し替えるだけ。
+ *
+ * ② 本格的な方法：Instagram Graph APIから取得したデータをNetlify Functionsで返し、
+ *    ここでfetchして表示する。プロアカウント化・Meta for Developersでのアプリ登録が必要。
+ */
+const placeholderPosts = Array.from({ length: 6 }, (_, i) => i + 1);
+---
+<section class="insta" id="latest-post">
+  <div class="insta__head">
+    <h2>Snapshots</h2>
+    <a class="insta__link" href="https://instagram.com" target="_blank" rel="noopener">@your_handle ↗</a>
+  </div>
+  <p class="insta__note">
+    ここにInstagramの最新投稿が並びます（現在はプレースホルダー）。
+    設定方法は README.md をご覧ください。
+  </p>
+  <div class="insta__grid">
+    {placeholderPosts.map((n) => (
+      <div class="insta__tile" aria-hidden="true">
+        <span>{n}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .insta { margin: 64px 0; }
+  .insta__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 10px;
+  }
+  .insta__link {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--accent-teal);
+  }
+  .insta__note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 10px 0 20px;
+  }
+  .insta__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .insta__tile {
+    aspect-ratio: 1;
+    background: var(--paper-raised);
+    border: 1px dashed var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    color: var(--ink-soft);
+    font-size: 12px;
+  }
+</style>

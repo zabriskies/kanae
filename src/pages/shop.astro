@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+/**
+ * ショップページ（準備中プレースホルダー）
+ *
+ * 商品を売り始める最短ルート：
+ * 1. Stripeでアカウント作成 → 「Payment Links（決済リンク）」を商品ごとに発行
+ * 2. 下のproducts配列に name / price / url を追加するだけでボタンが並ぶ
+ * 3. 本数が増えてカート機能が欲しくなったらSnipcartへの移行を検討
+ *
+ * 詳しくは README.md の「将来のショップ機能」を参照してください。
+ */
+const products: { name: string; price: string; url: string }[] = [
+  // { name: '商品名', price: '¥3,000', url: 'https://buy.stripe.com/xxxx' },
+];
+---
+<Layout title="Shop — Studio Note" description="商品の販売ページ（準備中）">
+  <section class="shop">
+    <p class="shop__eyebrow">Shop</p>
+    <h1>まもなく開店します</h1>
+    <p class="shop__lede">
+      ここに商品を並べていく予定です。準備が整い次第、Stripeの決済リンクで
+      購入できるようになります。
+    </p>
+
+    {products.length > 0 ? (
+      <div class="shop__grid">
+        {products.map((p) => (
+          <a class="shop__item" href={p.url} target="_blank" rel="noopener">
+            <span class="shop__item-name">{p.name}</span>
+            <span class="shop__item-price">{p.price}</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="shop__empty">商品は準備中です。しばらくお待ちください。</div>
+    )}
+  </section>
+</Layout>
+
+<style>
+  .shop { padding: 56px 0 60px; }
+  .shop__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+    margin: 0 0 14px;
+  }
+  .shop__lede { max-width: 46ch; color: var(--ink-soft); margin-top: 12px; }
+  .shop__empty {
+    margin-top: 32px;
+    padding: 40px;
+    border: 1px dashed var(--rule);
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .shop__grid {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .shop__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper-raised);
+  }
+  .shop__item-name { font-family: var(--font-display); font-weight: 600; }
+  .shop__item-price { font-family: var(--font-mono); font-size: 13px; color: var(--accent-brick); }
+</style>

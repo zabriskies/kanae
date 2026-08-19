@@ -1,0 +1,58 @@
+---
+interface Props {
+  index: number;
+  href: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+}
+const { index, href, title, description, pubDate } = Astro.props;
+const dateStr = pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
+---
+<a class="post-card" href={href}>
+  <span class="post-card__index">{String(index).padStart(2, '0')}</span>
+  <span class="post-card__body">
+    <span class="post-card__title">{title}</span>
+    <span class="post-card__desc">{description}</span>
+  </span>
+  <time class="post-card__date" datetime={pubDate.toISOString()}>{dateStr}</time>
+</a>
+
+<style>
+  .post-card {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    align-items: baseline;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .post-card:hover .post-card__title { color: var(--accent-brick); }
+  .post-card__index {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-teal);
+  }
+  .post-card__body { display: flex; flex-direction: column; gap: 4px; }
+  .post-card__title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .post-card__desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .post-card__date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  @media (max-width: 560px) {
+    .post-card { grid-template-columns: 28px 1fr; }
+    .post-card__date { grid-column: 2; }
+  }
+</style>

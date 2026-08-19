@@ -1,0 +1,50 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const dateStr = post.data.pubDate.toLocaleDateString('ja-JP', {
+  year: 'numeric', month: '2-digit', day: '2-digit',
+});
+---
+<Layout title={`${post.data.title} — Studio Note`} description={post.data.description}>
+  <article class="post">
+    <p class="post__date">{dateStr}</p>
+    <h1>{post.data.title}</h1>
+    <div class="post__body">
+      <Content />
+    </div>
+    <a class="post__back" href="/blog">← Journal一覧へ</a>
+  </article>
+</Layout>
+
+<style>
+  .post { padding: 48px 0 60px; max-width: 68ch; }
+  .post__date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-teal);
+    margin: 0 0 10px;
+  }
+  .post__body { margin-top: 28px; font-size: 16px; }
+  .post__body :global(h2) { margin-top: 2em; font-size: 22px; }
+  .post__body :global(p) { margin: 1em 0; }
+  .post__body :global(ul) { padding-left: 1.2em; }
+  .post__back {
+    display: inline-block;
+    margin-top: 48px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--accent-brick);
+  }
+</style>

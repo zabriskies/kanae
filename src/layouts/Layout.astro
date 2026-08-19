@@ -1,0 +1,163 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'ブログ・作品・お知らせを発信しています。' } = Astro.props;
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=IBM+Plex+Mono:wght@400;500&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Decap CMSの招待メールのリンクをどのページからでも受けられるようにする -->
+    <script is:inline src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="site-frame">
+      <header class="masthead">
+        <a class="masthead__mark" href="/">
+          <span class="masthead__stamp">No.01</span>
+          <span class="masthead__name">Studio Note</span>
+        </a>
+        <nav class="masthead__nav">
+          <a href="/blog">Journal</a>
+          <a href="/shop">Shop</a>
+          <a href="/#latest-post">Instagram</a>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <p>© {new Date().getFullYear()} Studio Note. Built with Astro, hosted on Netlify.</p>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --paper: #efeae1;
+    --paper-raised: #f6f2ea;
+    --ink: #2b2620;
+    --ink-soft: #5c5346;
+    --rule: #d8cfbe;
+    --accent-teal: #3f6b63;
+    --accent-brick: #a63f2e;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Zen Kaku Gothic New', 'Fraunces', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    background: var(--paper);
+    color-scheme: light;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 1px 1px, rgba(43,38,32,0.06) 1px, transparent 0) 0 0/22px 22px,
+      var(--paper);
+    line-height: 1.7;
+  }
+
+  .site-frame {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  a { color: inherit; }
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .masthead__mark {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .masthead__stamp {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 2px 9px;
+    transform: rotate(-3deg);
+    color: var(--accent-brick);
+  }
+
+  .masthead__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+  }
+
+  .masthead__nav {
+    display: flex;
+    gap: 22px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.03em;
+  }
+
+  .masthead__nav a {
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+  .masthead__nav a:hover { border-bottom-color: var(--accent-brick); }
+
+  .site-footer {
+    margin-top: 80px;
+    padding: 22px 0 40px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; margin: 0 0 0.4em; }
+
+  @media (max-width: 560px) {
+    .masthead { padding: 20px 0 16px; }
+    .masthead__name { font-size: 19px; }
+  }
+</style>
