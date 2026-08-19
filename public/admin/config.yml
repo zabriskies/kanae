@@ -6,17 +6,22 @@ backend:
   identity_url: https://auth.decapbridge.com/sites/f1884b66-b54d-4e43-9d0f-2cc36f38a11a
   gateway_url: https://gateway.decapbridge.com
 
-  # See who did what (optional)
-  commit_messages:
-    create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
-    openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
-# Better Decap + Bridge logo (optional)
-logo_url: https://decapbridge.com/decapcms-with-bridge.svg
-
-# Add site links in Decap CMS (optional)
-site_url: https://kanaemaezawa.netlify.app
+collections:
+  - name: "blog"
+    label: "Journal（ブログ）"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    fields:
+      - { label: "タイトル", name: "title", widget: "string" }
+      - { label: "概要", name: "description", widget: "text", required: false }
+      - { label: "公開日", name: "pubDate", widget: "datetime" }
+      - { label: "更新日", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "アイキャッチ画像", name: "heroImage", widget: "image", required: false }
+      - { label: "下書きにする", name: "draft", widget: "boolean", default: false }
+      - { label: "本文", name: "body", widget: "markdown" }pp
