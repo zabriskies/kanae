@@ -24,4 +24,4 @@ collections:
       - { label: "更新日", name: "updatedDate", widget: "datetime", required: false }
       - { label: "アイキャッチ画像", name: "heroImage", widget: "image", required: false }
       - { label: "下書きにする", name: "draft", widget: "boolean", default: false }
-      - { label: "本文", name: "body", widget: "markdown" }pp
+      - { label: "本文", name: "body", widget: "markdown" }
