@@ -18,10 +18,17 @@ const dateStr = post.data.pubDate.toLocaleDateString('ja-JP', {
 ---
 <Layout title={`${post.data.title} — Studio Note`} description={post.data.description}>
   <article class="post">
-    <p class="post__date">{dateStr}</p>
+    
+	
+	    <p class="post__date">{dateStr}</p>
     <h1>{post.data.title}</h1>
+    {post.data.heroImage && (
+      <img class="post__hero" src={post.data.heroImage} alt={post.data.title} />
+    )}
     <div class="post__body">
-      <Content />
+      
+	  
+	  <Content />
     </div>
     <a class="post__back" href="/blog">← Journal一覧へ</a>
   </article>
@@ -35,6 +42,13 @@ const dateStr = post.data.pubDate.toLocaleDateString('ja-JP', {
     color: var(--accent-teal);
     margin: 0 0 10px;
   }
+   .post__hero {
+    width: 100%;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+  
+  
   .post__body { margin-top: 28px; font-size: 16px; }
   .post__body :global(h2) { margin-top: 2em; font-size: 22px; }
   .post__body :global(p) { margin: 1em 0; }
