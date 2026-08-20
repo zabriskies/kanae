@@ -1,8 +1,8 @@
 ---
-title: "はじめまして"
-description: "このブログを始めた理由と、これから書いていくことについて。"
+title: はじめまして
+description: このブログを始めた理由と、これから書いていくことについて。
 pubDate: 2026-08-01
-heroImage: ""
+heroImage: /uploads/img_5253-2.jpg
 draft: false
 ---
 
